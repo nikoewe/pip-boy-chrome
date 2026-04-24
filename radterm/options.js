@@ -1,10 +1,9 @@
-/* Rip-Boy Options Page */
+/* RadTerm Options Page */
 
-const { DEFAULT_BRANDS, PRESET_CLASSIC, loadBrands, saveBrands, resetBrands } = window.RipBoyConfig;
+const { DEFAULT_BRANDS, loadBrands, saveBrands, resetBrands } = window.RadTermConfig;
 
 const form = document.getElementById("config-form");
 const resetBtn = document.getElementById("reset-btn");
-const presetBtn = document.getElementById("preset-btn");
 const statusMsg = document.getElementById("status");
 
 let current = { ...DEFAULT_BRANDS };
@@ -59,19 +58,6 @@ resetBtn.addEventListener("click", async () => {
   current = await resetBrands();
   populateForm(current);
   showStatus("✓ DEFAULTS RESTORED", "ok");
-});
-
-/* Load classic preset into form fields without saving.
-   User must click SAVE CHANGES to commit. */
-presetBtn.addEventListener("click", () => {
-  form.querySelectorAll("[data-config-key]").forEach((input) => {
-    const key = input.dataset.configKey;
-    if (PRESET_CLASSIC[key] !== undefined) {
-      input.value = PRESET_CLASSIC[key];
-    }
-  });
-  applyPreviewColorScheme(PRESET_CLASSIC.colorScheme || "green");
-  showStatus("PRESET LOADED — REVIEW AND SAVE TO APPLY", "ok");
 });
 
 /* Boot */

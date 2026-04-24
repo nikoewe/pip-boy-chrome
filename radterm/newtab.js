@@ -1,7 +1,7 @@
-/* RIP-BOY Terminal — New Tab logic */
+/* RadTerm — New Tab logic */
 
 const { DEFAULT_BRANDS, loadBrands, loadBrandsFast, saveBrands, resetBrands,
-        onBrandsChanged, storageGet, storageSet } = window.RipBoyConfig;
+        onBrandsChanged, storageGet, storageSet } = window.RadTermConfig;
 
 /* Fallback used only when topSites API is unavailable AND user has no stored list. */
 const HARDCODED_FALLBACK_SHORTCUTS = [
@@ -15,7 +15,7 @@ const HARDCODED_FALLBACK_SHORTCUTS = [
   { name: "Wiki",     url: "https://en.wikipedia.org" },
 ];
 
-const STORAGE_KEY_SHORTCUTS = "pipboy_shortcuts";
+const STORAGE_KEY_SHORTCUTS = "radterm_shortcuts";
 const MAX_TOP_SITES = 10;
 
 /* Derive a short terminal-style label from a URL (used for topSites items). */
@@ -247,7 +247,6 @@ const configForm = document.getElementById("config-form");
 const configBtn = document.getElementById("config-btn");
 const configCancelBtn = document.getElementById("config-cancel-btn");
 const configResetBtn = document.getElementById("config-reset-btn");
-const configPresetBtn = document.getElementById("config-preset-btn");
 
 function openConfigModal() {
   configForm.querySelectorAll("[data-config-key]").forEach((input) => {
@@ -283,18 +282,6 @@ configResetBtn.addEventListener("click", async () => {
   brands = await resetBrands();
   applyBrands();
   closeConfigModal();
-});
-
-/* Load the classic preset into the form fields without saving.
-   User clicks APPLY to commit, giving them a chance to review/edit first. */
-configPresetBtn.addEventListener("click", () => {
-  const { PRESET_CLASSIC } = window.RipBoyConfig;
-  configForm.querySelectorAll("[data-config-key]").forEach((input) => {
-    const key = input.dataset.configKey;
-    if (PRESET_CLASSIC[key] !== undefined) {
-      input.value = PRESET_CLASSIC[key];
-    }
-  });
 });
 
 document.addEventListener("keydown", (ev) => {

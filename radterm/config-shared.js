@@ -1,5 +1,5 @@
 /* Shared config module — used by newtab.js, options.js, and the inline head preload.
-   Must be loaded BEFORE the page-specific script. Exposes window.RipBoyConfig.
+   Must be loaded BEFORE the page-specific script. Exposes window.RadTermConfig.
 
    NOTE: This module dual-writes brand settings to both chrome.storage.local (source
    of truth, cross-tab synced) AND window.localStorage (synchronous fast-path cache
@@ -8,10 +8,10 @@
   "use strict";
 
   const DEFAULT_BRANDS = {
-    heroTitle:         "RIP-BOY",
-    heroSubtitle:      "— APPROVED FOR PUBLIC USE —",
-    headerBanner:      "BOTCO INDUSTRIES (TM) TERMLINK — RIP-OS V7.1.0.8",
-    tabTitle:          "RIP-OS V7.1.0.8",
+    heroTitle:         "RADTERM",
+    heroSubtitle:      "— SYSTEM READY —",
+    headerBanner:      "RADTERM LINK // OS V7.1.0.8",
+    tabTitle:          "RADTERM OS V7.1.0.8",
     shortcutsLabel:    "[ BOOKMARKED FREQUENCIES ]",
     searchPrompt:      "> QUERY:",
     searchPlaceholder: "ENTER SEARCH TERM...",
@@ -22,27 +22,8 @@
     colorScheme:       "green",
   };
 
-  /* Preset brand values — the unlicensed originals.
-     NOT shipped as defaults; users opt in via the CLASSIC PRESET button.
-     This is local personalization only; these names remain nowhere in the
-     extension's shipped / store-visible metadata. */
-  const PRESET_CLASSIC = {
-    heroTitle:         "VAULT-TEC",
-    heroSubtitle:      "— APPROVED FOR PUBLIC USE —",
-    headerBanner:      "ROBCO INDUSTRIES (TM) TERMLINK — PIP-OS V7.1.0.8",
-    tabTitle:          "PIP-OS V7.1.0.8",
-    shortcutsLabel:    "[ BOOKMARKED FREQUENCIES ]",
-    searchPrompt:      "> QUERY:",
-    searchPlaceholder: "ENTER SEARCH TERM...",
-    statusLine1:       "STATUS: <b>ONLINE</b>",
-    statusLine2:       "RAD: 000 RAD/S",
-    statusLine3:       "HP: <bar>██████████</bar> 100/100",
-    statusLine4:       "AP: <bar>████████░░</bar> 85/85",
-    colorScheme:       "green",
-  };
-
-  const STORAGE_KEY_BRANDS = "pipboy_brands";
-  const CACHE_KEY = "pipboy_brands_cache_v1";
+  const STORAGE_KEY_BRANDS = "radterm_brands";
+  const CACHE_KEY = "radterm_brands_cache_v1";
 
   /* ---------- synchronous cache (FOUC prevention) ---------- */
 
@@ -143,9 +124,8 @@
     }
   }
 
-  global.RipBoyConfig = {
+  global.RadTermConfig = {
     DEFAULT_BRANDS,
-    PRESET_CLASSIC,
     STORAGE_KEY_BRANDS,
     storageGet,
     storageSet,

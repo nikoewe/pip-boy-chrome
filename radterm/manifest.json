@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Rip-Boy New Tab",
-  "version": "1.2.0",
+  "name": "RadTerm",
+  "version": "1.3.0",
   "description": "A retro CRT terminal new tab page with customizable branding, search, and shortcut tiles. Phosphor green by default — configurable to amber, blue, red, or mono.",
   "chrome_url_overrides": {
     "newtab": "newtab.html"
