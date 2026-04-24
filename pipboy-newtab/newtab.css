@@ -1,0 +1,716 @@
+/* ============================================
+   PIP-BOY 3000 — NEW TAB STYLES
+   ROBCO Industries TermLink Protocol
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
+
+/* ---- phosphor color schemes ---- */
+/* The legacy --green-* names are kept for layout; they resolve to
+   whatever phosphor the current scheme defines. */
+:root,
+:root[data-scheme="green"] {
+  --bg-deep: #020a05;
+  --bg-mid:  #051208;
+  --bg-panel:#0a1a0e;
+  --phosphor-dim:    #2d6634;
+  --phosphor:        #52c878;
+  --phosphor-bright: #8aff9e;
+  --phosphor-rgb:    138, 255, 158;
+  --glow-tint:       rgba(50, 120, 60, 0.18);
+  --glow-tint-mid:   rgba(20, 60, 30, 0.08);
+}
+:root[data-scheme="amber"] {
+  --bg-deep: #0c0602;
+  --bg-mid:  #160c03;
+  --bg-panel:#1e1205;
+  --phosphor-dim:    #7a4a10;
+  --phosphor:        #d8982b;
+  --phosphor-bright: #ffc14a;
+  --phosphor-rgb:    255, 193, 74;
+  --glow-tint:       rgba(180, 120, 40, 0.20);
+  --glow-tint-mid:   rgba(90, 55, 15, 0.10);
+}
+:root[data-scheme="blue"] {
+  --bg-deep: #020814;
+  --bg-mid:  #041024;
+  --bg-panel:#081a38;
+  --phosphor-dim:    #2a5080;
+  --phosphor:        #4aaaff;
+  --phosphor-bright: #9ad0ff;
+  --phosphor-rgb:    154, 208, 255;
+  --glow-tint:       rgba(40, 100, 180, 0.20);
+  --glow-tint-mid:   rgba(20, 50, 95, 0.10);
+}
+:root[data-scheme="red"] {
+  --bg-deep: #0a0202;
+  --bg-mid:  #150404;
+  --bg-panel:#1c0808;
+  --phosphor-dim:    #662020;
+  --phosphor:        #e04040;
+  --phosphor-bright: #ff8080;
+  --phosphor-rgb:    255, 128, 128;
+  --glow-tint:       rgba(160, 40, 40, 0.20);
+  --glow-tint-mid:   rgba(80, 20, 20, 0.10);
+}
+:root[data-scheme="white"] {
+  --bg-deep: #030303;
+  --bg-mid:  #0a0a0a;
+  --bg-panel:#141414;
+  --phosphor-dim:    #555555;
+  --phosphor:        #bfbfbf;
+  --phosphor-bright: #f5f5f5;
+  --phosphor-rgb:    245, 245, 245;
+  --glow-tint:       rgba(200, 200, 200, 0.15);
+  --glow-tint-mid:   rgba(120, 120, 120, 0.08);
+}
+
+/* Legacy alias names used throughout the stylesheet */
+:root {
+  --green-dim:    var(--phosphor-dim);
+  --green:        var(--phosphor);
+  --green-bright: var(--phosphor-bright);
+  --scan-line: rgba(0, 0, 0, 0.35);
+  --font-display: 'VT323', 'Share Tech Mono', 'Consolas', monospace;
+  --font-body: 'Share Tech Mono', 'Consolas', 'Monaco', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--green);
+  font-family: var(--font-body);
+  font-size: 18px;
+  /* subtle radial phosphor glow in center */
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--glow-tint) 0%,
+    var(--glow-tint-mid) 35%,
+    var(--bg-deep) 75%
+  );
+}
+
+/* ---------------- CRT OVERLAYS ---------------- */
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    var(--scan-line) 2px,
+    var(--scan-line) 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+}
+
+.flicker {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 101;
+  background: rgba(var(--phosphor-rgb), 0.02);
+  animation: flicker 3.4s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.4; }
+  45% { opacity: 0.45; }
+  50% { opacity: 0.15; }
+  55% { opacity: 0.5; }
+  70% { opacity: 0.3; }
+}
+
+@keyframes phosphor-pulse {
+  0%, 100% { text-shadow: 0 0 3px var(--green), 0 0 8px rgba(var(--phosphor-rgb), 0.5); }
+  50%      { text-shadow: 0 0 4px var(--green-bright), 0 0 14px rgba(var(--phosphor-rgb), 0.6); }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes scan-roll {
+  0%   { transform: translateY(-10vh); opacity: 0; }
+  20%  { opacity: 0.12; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+/* occasional horizontal scan line rolling down */
+body::after {
+  content: '';
+  position: fixed;
+  left: 0; right: 0;
+  top: 0;
+  height: 60px;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(var(--phosphor-rgb), 0.06),
+    transparent);
+  pointer-events: none;
+  z-index: 102;
+  animation: scan-roll 8s linear infinite;
+}
+
+/* ---------------- LAYOUT ---------------- */
+
+.terminal {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 1.5rem;
+  padding: 1.25rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ---------------- STATUS BARS ---------------- */
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--green-dim);
+  background: rgba(var(--phosphor-rgb), 0.2);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: var(--green);
+  text-shadow: 0 0 4px rgba(var(--phosphor-rgb), 0.6);
+}
+
+.status-bar .spacer { flex: 1; }
+
+.indicator {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  box-shadow: 0 0 8px var(--green-bright), 0 0 14px var(--green);
+  animation: blink 1.6s infinite;
+}
+
+.bright { color: var(--green-bright); }
+
+.bar {
+  color: var(--green-bright);
+  letter-spacing: -1px;
+  text-shadow: 0 0 6px var(--green-bright);
+}
+
+/* ---------------- HERO ---------------- */
+
+.hero { text-align: center; }
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-weight: normal;
+  letter-spacing: 0.15em;
+  color: var(--green-bright);
+  text-shadow:
+    0 0 6px var(--green-bright),
+    0 0 18px rgba(var(--phosphor-rgb), 0.6),
+    0 0 32px rgba(var(--phosphor-rgb), 0.4);
+  line-height: 1;
+  animation: phosphor-pulse 4s ease-in-out infinite;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  color: var(--green);
+  text-shadow: 0 0 4px var(--green);
+  margin-top: 0.25rem;
+}
+
+/* ---------------- SEARCH ---------------- */
+
+.search-section {
+  display: flex;
+  justify-content: center;
+}
+
+.search-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(720px, 95%);
+  padding: 1rem 1.5rem;
+  background: rgba(var(--phosphor-rgb), 0.04);
+  border: 1px solid var(--green-dim);
+  box-shadow:
+    inset 0 0 30px rgba(var(--phosphor-rgb), 0.15),
+    0 0 20px rgba(var(--phosphor-rgb), 0.15);
+}
+
+.prompt {
+  color: var(--green-bright);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 6px var(--green-bright);
+  white-space: nowrap;
+}
+
+#search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--green-bright);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 5px var(--green-bright);
+  caret-color: transparent;
+}
+
+#search-input::placeholder {
+  color: var(--green-dim);
+  text-shadow: none;
+}
+
+.caret {
+  color: var(--green-bright);
+  font-size: 1.4rem;
+  text-shadow: 0 0 6px var(--green-bright);
+  animation: blink 1s steps(2) infinite;
+}
+
+/* Corner brackets — re-usable on any .bracket container */
+.bracket {
+  position: absolute;
+  width: 14px; height: 14px;
+  border-color: var(--green-bright);
+  border-style: solid;
+  border-width: 0;
+  filter: drop-shadow(0 0 3px var(--green-bright));
+}
+.bracket-tl { top: -3px; left: -3px; border-top-width: 2px; border-left-width: 2px; }
+.bracket-tr { top: -3px; right: -3px; border-top-width: 2px; border-right-width: 2px; }
+.bracket-bl { bottom: -3px; left: -3px; border-bottom-width: 2px; border-left-width: 2px; }
+.bracket-br { bottom: -3px; right: -3px; border-bottom-width: 2px; border-right-width: 2px; }
+
+/* ---------------- SHORTCUTS ---------------- */
+
+.shortcuts-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.2em;
+  color: var(--green);
+  text-shadow: 0 0 5px var(--green);
+}
+
+.edit-btn {
+  background: transparent;
+  border: 1px solid var(--green-dim);
+  color: var(--green);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.edit-btn:hover, .edit-btn.active {
+  color: var(--green-bright);
+  border-color: var(--green-bright);
+  box-shadow: 0 0 10px rgba(var(--phosphor-rgb), 0.4);
+  text-shadow: 0 0 4px var(--green-bright);
+}
+
+.shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 110px);
+  gap: 1rem;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.shortcut {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 0.5rem;
+  background: rgba(var(--phosphor-rgb), 0.4);
+  border: 1px solid var(--green-dim);
+  color: var(--green);
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.15s;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.shortcut::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(var(--phosphor-rgb), 0.08) 50%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.shortcut:hover {
+  border-color: var(--green-bright);
+  background: rgba(var(--phosphor-rgb), 0.35);
+  color: var(--green-bright);
+  box-shadow:
+    0 0 12px rgba(var(--phosphor-rgb), 0.5),
+    inset 0 0 15px rgba(var(--phosphor-rgb), 0.2);
+  text-shadow: 0 0 5px var(--green-bright);
+}
+.shortcut:hover::before { opacity: 1; }
+
+.shortcut-icon {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  filter: sepia(1) hue-rotate(var(--favicon-hue, 60deg)) saturate(4) brightness(1.1) contrast(1.3);
+}
+.shortcut-icon img { width: 100%; height: 100%; object-fit: contain; }
+
+.shortcut-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+.shortcut.add-tile {
+  background: rgba(var(--phosphor-rgb), 0.2);
+  border-style: dashed;
+}
+.shortcut.add-tile .shortcut-icon {
+  font-size: 2rem;
+  filter: none;
+  color: var(--green);
+}
+
+/* Edit mode: show remove X */
+.shortcut-remove {
+  position: absolute;
+  top: 2px; right: 4px;
+  width: 20px; height: 20px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--green-bright);
+  color: var(--green-bright);
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.shortcuts-grid.edit-mode .shortcut-remove { display: flex; }
+.shortcut-remove:hover {
+  background: rgba(180, 60, 60, 0.7);
+  border-color: #ffaa88;
+  color: #ffccaa;
+}
+
+/* ---------------- MODAL ---------------- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 10, 5, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+.modal-backdrop.hidden { display: none; }
+
+.modal {
+  position: relative;
+  width: min(480px, 90%);
+  padding: 2rem;
+  background: var(--bg-panel);
+  border: 1px solid var(--green);
+  box-shadow:
+    0 0 30px rgba(var(--phosphor-rgb), 0.4),
+    inset 0 0 40px rgba(var(--phosphor-rgb), 0.15);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.2em;
+  color: var(--green-bright);
+  text-shadow: 0 0 6px var(--green-bright);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.field-label {
+  display: block;
+  color: var(--green);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.3rem;
+  text-shadow: 0 0 4px var(--green);
+}
+
+.modal input {
+  width: 100%;
+  background: rgba(var(--phosphor-rgb), 0.04);
+  border: 1px solid var(--green-dim);
+  color: var(--green-bright);
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  outline: none;
+  text-shadow: 0 0 4px var(--green-bright);
+}
+.modal input:focus {
+  border-color: var(--green-bright);
+  box-shadow: 0 0 10px rgba(var(--phosphor-rgb), 0.4);
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+}
+
+.btn {
+  background: transparent;
+  border: 1px solid var(--green-dim);
+  color: var(--green);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:hover {
+  color: var(--green-bright);
+  border-color: var(--green-bright);
+  box-shadow: 0 0 10px rgba(var(--phosphor-rgb), 0.4);
+  text-shadow: 0 0 4px var(--green-bright);
+}
+.btn-primary { color: var(--green-bright); border-color: var(--green); }
+
+/* scrollbar styling (in case) */
+::-webkit-scrollbar { width: 10px; background: var(--bg-deep); }
+::-webkit-scrollbar-thumb {
+  background: var(--green-dim);
+  border: 2px solid var(--bg-deep);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+/* selection */
+::selection {
+  background: var(--green);
+  color: var(--bg-deep);
+}
+
+/* small screen adjustments */
+@media (max-width: 600px) {
+  .terminal { padding: 0.75rem 1rem; gap: 1rem; }
+  .shortcuts-grid { grid-template-columns: repeat(auto-fit, 90px); }
+  .status-bar { flex-wrap: wrap; font-size: 0.8rem; gap: 0.75rem; }
+}
+
+/* ============================================
+   COLOR SCHEME — favicon hue rotation
+   Sepia filter's base color is around amber (~50deg),
+   so hue-rotate targets match phosphor color.
+   ============================================ */
+:root,
+:root[data-scheme="green"] { --favicon-hue: 60deg;  }
+:root[data-scheme="amber"] { --favicon-hue: 0deg;   }
+:root[data-scheme="blue"]  { --favicon-hue: 170deg; }
+:root[data-scheme="red"]   { --favicon-hue: 320deg; }
+:root[data-scheme="white"] {
+  /* white/mono: desaturate instead */
+  --favicon-hue: 0deg;
+}
+:root[data-scheme="white"] .shortcut-icon {
+  filter: grayscale(1) brightness(1.4) contrast(1.2);
+}
+
+/* ============================================
+   CONFIG BUTTON (in top status bar)
+   ============================================ */
+.icon-btn {
+  background: transparent;
+  border: 1px solid var(--green-dim);
+  color: var(--green);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  padding: 0.15rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.icon-btn:hover {
+  color: var(--green-bright);
+  border-color: var(--green-bright);
+  box-shadow: 0 0 8px rgba(var(--phosphor-rgb), 0.4);
+  text-shadow: 0 0 4px var(--green-bright);
+}
+
+/* ============================================
+   CONFIG MODAL
+   ============================================ */
+.modal.modal-config {
+  width: min(720px, 92%);
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 1.75rem 2rem;
+}
+
+.config-intro {
+  color: var(--green-dim);
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.modal.modal-config label {
+  margin-bottom: 0.75rem;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modal.modal-config .field-label {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal.modal-config input,
+.modal.modal-config select {
+  font-size: 1rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.modal.modal-config select {
+  width: 100%;
+  background: rgba(var(--phosphor-rgb), 0.04);
+  border: 1px solid var(--green-dim);
+  color: var(--green-bright);
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--green) 50%),
+                    linear-gradient(135deg, var(--green) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 30px;
+}
+
+.modal.modal-config select:focus {
+  border-color: var(--green-bright);
+  box-shadow: 0 0 10px rgba(var(--phosphor-rgb), 0.4);
+}
+
+.modal.modal-config select option {
+  background: var(--bg-panel);
+  color: var(--green-bright);
+}
+
+.modal.modal-config .modal-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+.modal.modal-config .modal-buttons > #config-reset-btn,
+.modal.modal-config .modal-buttons > #config-preset-btn {
+  margin-right: auto;
+}
+.modal.modal-config .modal-buttons > #config-preset-btn {
+  margin-right: 0;
+}
+.modal.modal-config .btn {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 600px) {
+  .modal.modal-config label {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
+
+/* ============================================
+   FOUC PREVENTION
+   Hide brand-dependent text until JS has applied the correct values.
+   Layout (positions, backgrounds, borders) still renders — only text vanishes.
+   ============================================ */
+html.brands-loading [data-brand],
+html.brands-loading [data-brand-attr]::placeholder {
+  visibility: hidden;
+}
+html.brands-loading [data-brand-attr] {
+  color: transparent;
+}

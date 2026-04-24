@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rip-Boy Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="scanlines"></div>
+
+  <main class="panel">
+    <header class="panel-header">
+      <span class="indicator"></span>
+      <h1>RIP-BOY :: TERMINAL CONFIGURATION</h1>
+    </header>
+
+    <p class="intro">
+      Customize the text displayed on your new tab page. Changes save automatically
+      and apply to any open tabs instantly. Use <code>&lt;b&gt;...&lt;/b&gt;</code>
+      for bright highlights and <code>&lt;bar&gt;████░░&lt;/bar&gt;</code> for meter-style bars
+      in the status lines.
+    </p>
+
+    <div id="status" class="status-msg" aria-live="polite"></div>
+
+    <form id="config-form">
+      <fieldset>
+        <legend>&gt; HEADER &amp; HERO</legend>
+        <label>
+          <span class="field-label">HERO TITLE</span>
+          <input data-config-key="heroTitle" type="text" maxlength="24" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">HERO SUBTITLE</span>
+          <input data-config-key="heroSubtitle" type="text" maxlength="60" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">HEADER BANNER</span>
+          <input data-config-key="headerBanner" type="text" maxlength="80" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">BROWSER TAB TITLE</span>
+          <input data-config-key="tabTitle" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>&gt; SEARCH &amp; SHORTCUTS</legend>
+        <label>
+          <span class="field-label">SEARCH PROMPT</span>
+          <input data-config-key="searchPrompt" type="text" maxlength="20" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">SEARCH PLACEHOLDER</span>
+          <input data-config-key="searchPlaceholder" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">SHORTCUTS LABEL</span>
+          <input data-config-key="shortcutsLabel" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>&gt; STATUS BAR</legend>
+        <label>
+          <span class="field-label">STATUS LINE 1</span>
+          <input data-config-key="statusLine1" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">STATUS LINE 2</span>
+          <input data-config-key="statusLine2" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">STATUS LINE 3</span>
+          <input data-config-key="statusLine3" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">STATUS LINE 4</span>
+          <input data-config-key="statusLine4" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>&gt; APPEARANCE</legend>
+        <label>
+          <span class="field-label">PHOSPHOR COLOR</span>
+          <select data-config-key="colorScheme">
+            <option value="green">GREEN  — classic phosphor</option>
+            <option value="amber">AMBER  — vintage terminal</option>
+            <option value="blue">BLUE   — holographic</option>
+            <option value="red">RED    — warning / alert</option>
+            <option value="white">WHITE  — monochrome</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <div class="buttons">
+        <button type="button" id="reset-btn" class="btn btn-danger">[ RESET DEFAULTS ]</button>
+        <button type="button" id="preset-btn" class="btn">[ CLASSIC PRESET ]</button>
+        <span class="spacer"></span>
+        <button type="submit" class="btn btn-primary">[ SAVE CHANGES ]</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="config-shared.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

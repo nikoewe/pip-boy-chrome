@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Rip-Boy New Tab",
+  "version": "1.2.0",
+  "description": "A retro CRT terminal new tab page with customizable branding, search, and shortcut tiles. Phosphor green by default — configurable to amber, blue, red, or mono.",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": ["storage", "topSites"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

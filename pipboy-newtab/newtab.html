@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" class="brands-loading">
+<head>
+  <meta charset="UTF-8">
+  <title data-brand="tabTitle">RIP-OS V7.1.0.8</title>
+  <link rel="stylesheet" href="newtab.css">
+  <!-- Synchronous brand preload to prevent FOUC.
+       Reads cached brands from localStorage and applies color scheme + title
+       before any pixels are painted. The body script does the same thing again
+       with data from chrome.storage (the authoritative source) once ready. -->
+  <script src="config-shared.js"></script>
+  <script>window.RipBoyConfig.preApplyBrands();</script>
+</head>
+<body>
+  <div class="scanlines"></div>
+  <div class="vignette"></div>
+  <div class="flicker"></div>
+
+  <main class="terminal">
+    <header class="status-bar status-top">
+      <span class="indicator"></span>
+      <span data-brand="headerBanner">BOTCO INDUSTRIES (TM) TERMLINK — RIP-OS V7.1.0.8</span>
+      <span class="spacer"></span>
+      <button id="config-btn" class="icon-btn" title="Customize branding">CONFIG</button>
+      <span id="clock">--:--:--</span>
+    </header>
+
+    <section class="hero">
+      <h1 class="title" data-brand="heroTitle">RIP-BOY</h1>
+      <p class="subtitle" data-brand="heroSubtitle">— APPROVED FOR PUBLIC USE —</p>
+    </section>
+
+    <section class="search-section">
+      <form id="search-form" class="search-frame" autocomplete="off">
+        <span class="bracket bracket-tl"></span>
+        <span class="bracket bracket-tr"></span>
+        <span class="bracket bracket-bl"></span>
+        <span class="bracket bracket-br"></span>
+        <label for="search-input" class="prompt" data-brand="searchPrompt">&gt;&nbsp;QUERY:</label>
+        <input
+          id="search-input"
+          type="text"
+          autofocus
+          spellcheck="false"
+          data-brand-attr="searchPlaceholder:placeholder"
+          placeholder="ENTER SEARCH TERM..."
+        />
+        <span class="caret">█</span>
+      </form>
+    </section>
+
+    <section class="shortcuts-section">
+      <div class="section-header">
+        <span class="section-label" data-brand="shortcutsLabel">[ BOOKMARKED FREQUENCIES ]</span>
+        <button id="edit-toggle" class="edit-btn" title="Toggle edit mode">EDIT</button>
+      </div>
+      <div id="shortcuts" class="shortcuts-grid"></div>
+    </section>
+
+    <footer class="status-bar status-bottom">
+      <span data-brand="statusLine1">STATUS: <span class="bright">ONLINE</span></span>
+      <span data-brand="statusLine2">RAD: 000 RAD/S</span>
+      <span data-brand="statusLine3">HP: <span class="bar">██████████</span> 100/100</span>
+      <span data-brand="statusLine4">AP: <span class="bar">████████░░</span> 85/85</span>
+      <span class="spacer"></span>
+      <span id="date">-- --- ----</span>
+    </footer>
+  </main>
+
+  <!-- ADD SHORTCUT MODAL -->
+  <div id="modal-backdrop" class="modal-backdrop hidden">
+    <div class="modal">
+      <span class="bracket bracket-tl"></span>
+      <span class="bracket bracket-tr"></span>
+      <span class="bracket bracket-bl"></span>
+      <span class="bracket bracket-br"></span>
+      <h2 class="modal-title" id="modal-title">ADD NEW FREQUENCY</h2>
+      <form id="shortcut-form">
+        <label>
+          <span class="field-label">&gt; NAME:</span>
+          <input id="new-name" type="text" maxlength="12" required spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; URL:</span>
+          <input id="new-url" type="url" required spellcheck="false" placeholder="https://"/>
+        </label>
+        <div class="modal-buttons">
+          <button type="button" id="cancel-btn" class="btn">[ CANCEL ]</button>
+          <button type="submit" class="btn btn-primary">[ CONFIRM ]</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CONFIG / BRANDING MODAL -->
+  <div id="config-backdrop" class="modal-backdrop hidden">
+    <div class="modal modal-config">
+      <span class="bracket bracket-tl"></span>
+      <span class="bracket bracket-tr"></span>
+      <span class="bracket bracket-bl"></span>
+      <span class="bracket bracket-br"></span>
+      <h2 class="modal-title">TERMINAL CONFIGURATION</h2>
+      <p class="config-intro">Customize displayed branding. Saved locally to your browser.</p>
+      <form id="config-form">
+        <label>
+          <span class="field-label">&gt; HERO TITLE:</span>
+          <input data-config-key="heroTitle" type="text" maxlength="24" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; HERO SUBTITLE:</span>
+          <input data-config-key="heroSubtitle" type="text" maxlength="60" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; HEADER BANNER:</span>
+          <input data-config-key="headerBanner" type="text" maxlength="80" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; BROWSER TAB TITLE:</span>
+          <input data-config-key="tabTitle" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; SHORTCUTS LABEL:</span>
+          <input data-config-key="shortcutsLabel" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; SEARCH PROMPT:</span>
+          <input data-config-key="searchPrompt" type="text" maxlength="20" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; SEARCH PLACEHOLDER:</span>
+          <input data-config-key="searchPlaceholder" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; STATUS LINE 1:</span>
+          <input data-config-key="statusLine1" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; STATUS LINE 2:</span>
+          <input data-config-key="statusLine2" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; STATUS LINE 3:</span>
+          <input data-config-key="statusLine3" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label>
+          <span class="field-label">&gt; STATUS LINE 4:</span>
+          <input data-config-key="statusLine4" type="text" maxlength="40" spellcheck="false"/>
+        </label>
+        <label class="color-row">
+          <span class="field-label">&gt; PHOSPHOR COLOR:</span>
+          <select data-config-key="colorScheme">
+            <option value="green">GREEN  (classic)</option>
+            <option value="amber">AMBER  (vintage)</option>
+            <option value="blue">BLUE   (holo)</option>
+            <option value="red">RED    (warning)</option>
+            <option value="white">WHITE  (mono)</option>
+          </select>
+        </label>
+        <div class="modal-buttons">
+          <button type="button" id="config-reset-btn" class="btn">[ RESET DEFAULTS ]</button>
+          <button type="button" id="config-preset-btn" class="btn">[ CLASSIC PRESET ]</button>
+          <button type="button" id="config-cancel-btn" class="btn">[ CANCEL ]</button>
+          <button type="submit" class="btn btn-primary">[ APPLY ]</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="newtab.js"></script>
+</body>
+</html>
