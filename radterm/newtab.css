@@ -682,12 +682,8 @@ body::after {
   gap: 0.6rem;
   justify-content: flex-end;
 }
-.modal.modal-config .modal-buttons > #config-reset-btn,
-.modal.modal-config .modal-buttons > #config-preset-btn {
+.modal.modal-config .modal-buttons > #config-reset-btn {
   margin-right: auto;
-}
-.modal.modal-config .modal-buttons > #config-preset-btn {
-  margin-right: 0;
 }
 .modal.modal-config .btn {
   padding: 0.45rem 0.85rem;
